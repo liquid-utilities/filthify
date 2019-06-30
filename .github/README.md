@@ -18,7 +18,7 @@ A Liquid _filter_ written in Liquid to undo smartify and sanitation filters
 - [&#9889; Quick Start][heading__quick_start]
 
   - [Edit Your ReadMe File][heading__your_readme_file]
-  - [Use Filthify][use-filthify]
+  - [Utilize Filthify][utilize-filthify]
   - [Commit and Push][commit-and-push]
 
 - [&#x2696; License][license]
@@ -87,8 +87,8 @@ Update/upgrade submodules via
 
 
 ### Utilize Filthify
-[use-filthify]:
-  #use-filthify
+[utilize-filthify]:
+  #utilize-filthify
   "How to make use of this submodule within another project"
 
 
