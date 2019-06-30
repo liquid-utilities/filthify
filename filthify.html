@@ -1,0 +1,69 @@
+{% capture workspace__filthify %}
+  {% comment %}
+    This attempts to stupify and filthify content that
+    spent time with smartify and sanitation filters.
+
+    Note, this will add one blank line at the end of output.
+  {% endcomment %}
+
+
+
+  {% assign input = include.input | default: nil %}
+  {% assign strip_html = include.strip_html | default: false %}
+  {% if input %}
+    {% assign html_sanitized = '&amp;:&, &lt;:<, &gt;:>, &#126:~' %}
+    {% assign smartified = '“:", ”:", –:--, —:---, …:...' %}
+    {% assign smartified_quotes = "‘:', ’:'" %}
+
+    {% assign characters_list = html_sanitized %}
+    {% assign characters_list = characters_list | append: ', ' | append: smartified %}
+    {% assign characters_list = characters_list | append: ', ' | append: smartified_quotes %}
+    {% assign characters_list = characters_list | split: ', ' %}
+
+    {% if strip_html %}
+      {% assign filthified_input = input | strip_html %}
+    {% else %}
+      {% assign filthified_input = nil %}
+    {% endif %}
+
+    {% for character_pare in characters_list %}
+      {% assign sanitized = character_pare | split: ':' | first %}
+      {% assign filthified = character_pare | split: ':' | last %}
+      {% if input contains sanitized %}
+
+        {% if filthified_input %}
+          {% assign filthified_input = filthified_input | replace: sanitized, filthified %}
+        {% else %}
+          {% assign filthified_input = input | replace: sanitized, filthified %}
+        {% endif %}
+
+      {% else %}
+
+        {% unless filthified_input %}
+          {% assign filthified_input = input %}
+        {% endunless %}
+
+      {% endif %}
+    {% endfor %}
+
+  {% endif %}
+
+
+
+  {% comment %}
+    filthify.html is a submodule for Git tracked web sites
+      Copyright (C) 2019  S0AndS0
+
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU Affero General Public License as published
+      by the Free Software Foundation; version 3 of the License.
+
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Affero General Public License for more details.
+
+      You should have received a copy of the GNU Affero General Public License
+      along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  {% endcomment %}
+{% endcapture %}{% if filthified_input %}{{ filthified_input }}{% endif %}{% assign filthified_input = nil %}{% assign workspace__filthify = nil %}
